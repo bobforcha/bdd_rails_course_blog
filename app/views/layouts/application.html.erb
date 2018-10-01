@@ -10,6 +10,9 @@
   </head>
 
   <body>
+    <header role="banner">
+
+    </header>
     <% flash.each do |key, message| %>
       <div class="text-center alert alert-<%= key == 'notice' ? 'success' : 'danger' %>">
         <%= message %>
