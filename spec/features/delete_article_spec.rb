@@ -1,7 +1,12 @@
 require 'rails_helper'
 
 RSpec.feature "Deleting an Article" do
-  let!(:article) { Article.create(title: "Title One", body: "Body of article one") }
+  let!(:john) { User.create(email: "john@example.com", password: "password") }
+  let!(:article) { Article.create(title: "Title One", body: "Body of article one", user: john) }
+
+  before do
+    login_as john
+  end
 
   scenario "A user deletes an article" do
     visit root_path
