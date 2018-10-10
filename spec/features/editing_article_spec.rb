@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Editing an article" do
-  let!(:john) { User.create(email: "john@example.com", password: "password") }
-  let!(:article) { Article.create(title: "Title One", body: "Body of article one", user: john) }
+  let!(:john)     { User.create(email: "john@example.com", password: "password") }
+  let!(:article)  { Article.create(title: "Title One", body: "Body of article one", user: john) }
 
   before do
     login_as john

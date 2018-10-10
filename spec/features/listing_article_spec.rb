@@ -1,13 +1,9 @@
 require 'rails_helper'
 
 RSpec.feature "Listing Articles" do
-  let!(:john) { User.create(email: "john@example.com", password: "password") }
+  let!(:john)     { User.create(email: "john@example.com", password: "password") }
   let!(:article1) { Article.create(title: "The first article", body: "Lorem ipsum dolor sit amet, consectetur.", user: john) }
   let!(:article2) { Article.create(title: "The second article", body: "Body of 2nd article", user: john) }
-
-  before do
-    login_as john
-  end
 
   scenario "A user lists all articles" do
     visit root_path
