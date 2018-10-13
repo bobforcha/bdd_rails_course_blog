@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Articles", type: :request do
   let!(:john)     { User.create(email: "john@example.com", password: "password") }
   let!(:fred)     { User.create(email: "fred@example.com", password: "password") }
-  let!(:article)  { Article.create!(title: "Title One", body: "Body of article one.", user: john) }
+  let!(:article)  { Article.create(title: "Title One", body: "Body of article one.", user: john) }
 
   describe "GET /articles/:id" do
     context "with existing article" do
@@ -68,6 +68,7 @@ RSpec.describe "Articles", type: :request do
       before { delete "/articles/#{article.id}" }
 
       it "redirects to the sign-in page" do
+        expect(response).to redirect_to new_user_session_path
         expect(response.status).to eq 302
         flash_message = "You need to sign in or sign up before continuing."
         expect(flash[:alert]).to eq flash_message
@@ -82,6 +83,7 @@ RSpec.describe "Articles", type: :request do
         end
 
         it "redirects to the home page" do
+          expect(response).to redirect_to root_path
           expect(response.status).to eq 302
           flash_message = "You can only delete your own articles."
           expect(flash[:alert]).to eq flash_message
@@ -94,10 +96,11 @@ RSpec.describe "Articles", type: :request do
           delete "/articles/#{article.id}"
         end
 
-        it "redirects to the root path after successful delete" do
-          expect(response.status).to eq 200
+        it "redirects to the articles path after successful delete" do
+          expect(response).to redirect_to articles_path
+          expect(response.status).to eq 302
           flash_message = "Article has been deleted."
-          expect(flash[:success]).to eq flash_message
+          expect(flash[:alert]).to eq flash_message
         end
       end
     end

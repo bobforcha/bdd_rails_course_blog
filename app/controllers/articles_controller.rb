@@ -50,13 +50,20 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
+    unless current_user
+      flash.now[:danger] = "You need to sign in or sign up before continuing."
+      redirect_to new_user_session_path
+    end
     unless @article.user == current_user
-      flash[:danger] = "You can only delete your own articles."
+      flash.now[:danger] = "You can only delete your own articles."
       redirect_to root_path
     else
       if @article.destroy
         flash[:success] = "Article has been deleted"
         redirect_to articles_path
+      else
+        flash.now[:danger] = "Article has not been deleted"
+        render @article
       end
     end
   end
