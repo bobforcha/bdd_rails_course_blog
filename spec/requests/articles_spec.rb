@@ -93,7 +93,7 @@ RSpec.describe "Articles", type: :request do
       context "and is the article's owner" do
         before do
           login_as john
-          delete "/articles/#{article.id}"
+          delete article_path(article.id)
         end
 
         it "redirects to the articles path after successful delete" do
